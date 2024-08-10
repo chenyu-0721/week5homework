@@ -1,6 +1,6 @@
 <template>
   <section class="slidebar">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100" style="max-width: 296px">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100" style="width: 296px">
       <a
         href="/"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
@@ -42,7 +42,7 @@
           <a href="#" class="nav-link link-dark"> Settings </a>
         </li>
       </ul>
-      <hr />
+
       <div class="d-flex align-items-center">
         <img
           src="https://github.com/hexschool/2022-web-layout-training/blob/main/week5/andychen.jpeg?raw=true"

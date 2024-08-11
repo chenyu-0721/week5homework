@@ -201,7 +201,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const reply = ref(false)
+const reply = ref(true)
 
 const handleReplyClick = () => {
   reply.value = !reply.value

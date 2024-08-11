@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center m3248 justify-content-between">
       <div class="d-flex align-items-center">
         <h1>Admin</h1>
-        <div class="d-flex">
+        <div class="d-flex" data-bs-toggle="modal" data-bs-target="#newAdd">
           <span class="material-symbols-outlined icon"> add </span>
           <h5>Add New Admin</h5>
         </div>
@@ -34,7 +34,7 @@
               class="material-symbols-outlined tableIcon"
               @click="selectPerson(person)"
               data-bs-toggle="modal"
-              data-bs-target="#edit"
+              data-bs-target="#detail"
             >
               visibility
             </button>
@@ -139,6 +139,134 @@
         </div>
       </div>
     </div>
+    <div
+      class="modal fade modal-center"
+      id="detail"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header d-flex justify-content-between">
+            <div class="d-flex">
+              <img
+                class="img-fluid me-3"
+                src="https://github.com/hexschool/2022-web-layout-training/blob/main/week5/emir.jpeg?raw=true"
+              />
+              <ul class="d-flex flex-column">
+                <li class="editId">{{ selectedPerson.ID }}</li>
+                <li class="editAdmin">Admin</li>
+                <li class="editName">{{ selectedPerson.Name }}</li>
+                <li class="editEmail">{{ selectedPerson.Email }}</li>
+                <li class="editVerified">Verified</li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column align-items-end">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+
+              <a
+                :class="['material-symbols-outlined', 'dropIcon', { rotated: isRotated }]"
+                @click="toggleIcon"
+                data-bs-toggle="collapse"
+                href="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                keyboard_arrow_down
+              </a>
+            </div>
+          </div>
+          <div class="collapse" id="collapseExample">
+            <div v-if="isRotated" class="d-flex justify-content-end">
+              <button class="deactivate">Deactivate</button>
+              <button class="edit">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newAdd" tabindex="-1" aria-labelledby="newAdd" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Edit Admin</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h6>Account</h6>
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              id="name"
+              v-model="selectedPerson.Name"
+              class="form-control nameInput"
+              placeholder=""
+              required
+            />
+            <label for="Email" class="form-label mt-3">Email</label>
+            <input
+              type="text"
+              id="Email"
+              v-model="selectedPerson.Email"
+              class="form-control nameInput mb-4"
+              placeholder=""
+              required
+            />
+            <hr />
+            <h6>Verification</h6>
+
+            <div class="d-flex align-items-center">
+              <span class="material-symbols-outlined warning"> warning </span>
+              <span class="ms-2 unverified">Unverified</span>
+            </div>
+            <button class="candSendBtn mt-2 mb-2">Send Verification Mail</button>
+            <hr />
+            <h6>Access Level</h6>
+            <select>
+              <option>-Choose access level-</option>
+            </select>
+            <hr />
+            <h6>Custom Access</h6>
+            <div class="d-flex align-items-center">
+              <input type="checkbox" id="lecture" name="lecture" class="box" />
+              <label class="ms-2 boxLabel" for="lecture">Lecture</label>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <input type="checkbox" id="Coupon" name="Coupon" class="box" />
+              <label class="ms-2 boxLabel" for="Coupon">Coupon</label>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <input type="checkbox" id="Message" name="Message" class="box" />
+              <label class="ms-2 boxLabel" for="Message">Message</label>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <input type="checkbox" id="Setting" name="Setting" class="box" />
+              <label class="ms-2 boxLabel" for="Setting">Setting</label>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <input type="checkbox" id="Task Menu" name="Task Menu" class="box" />
+              <label class="ms-2 boxLabel" for="Task Menu">Task Menu</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="cancelbtn" data-bs-dismiss="modal">Cancel</button>
+            <button class="updatebtn" data-bs-dismiss="modal">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -217,6 +345,12 @@ const selectedPerson = ref({
 
 const selectPerson = (person) => {
   selectedPerson.value = { ...person }
+}
+
+const isRotated = ref(false)
+
+const toggleIcon = () => {
+  isRotated.value = !isRotated.value
 }
 </script>
 
@@ -370,8 +504,119 @@ const selectPerson = (person) => {
   background: var(--success) 0% 0% no-repeat padding-box;
   background: #198754 0% 0% no-repeat padding-box;
   border-radius: 2px;
+  border: 2px solid white;
   font: normal normal bold 16px/24px Lato;
   color: #ffffff;
   padding: 8px 33px;
+}
+
+.admin img {
+  width: 141px;
+  height: 141px;
+}
+
+.modal-header .d-flex.align-items-end {
+  gap: 100px;
+}
+
+.admin .modal-header {
+  border: 0px;
+}
+
+.admin .dropIcon {
+  color: #198754;
+  transition: transform 1s ease;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.admin .deactivate {
+  border: 1px solid var(--danger);
+  border: 1px solid #dc3545;
+  border-radius: 2px;
+  font: normal normal bold 16px/24px Lato;
+  color: #dc3545;
+  text-transform: capitalize;
+  background: white;
+  width: 146px;
+  height: 35px;
+  margin-right: 15px;
+}
+
+.admin .edit {
+  background: var(--success) 0% 0% no-repeat padding-box;
+  background: #198754 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  font: normal normal bold 16px/24px Lato;
+  color: #ffffff;
+  width: 92px;
+  height: 35px;
+  margin-right: 25px;
+}
+
+.admin a {
+  text-decoration: none;
+}
+
+.admin ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.admin .editId {
+  font: normal normal normal 16px/24px Lato;
+  color: #212529;
+}
+
+.admin .editAdmin {
+  font: normal normal normal 16px/24px Lato;
+  color: #212529;
+}
+
+.admin .editName {
+  font: normal normal bold 24px/36px Lato;
+  color: #212529;
+}
+
+.admin .editEmail {
+  font: normal normal normal 14px/24px Lato;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.admin .editVerified {
+  font: normal normal normal 14px/24px Lato;
+  color: #212529;
+  background: var(--gray-100) 0% 0% no-repeat padding-box;
+  background: #f8f9fa 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  width: 64px;
+  height: 25px;
+  text-align: center;
+}
+
+.admin .nameInput {
+  border: 1px solid var(--gray-900);
+  border: 1px solid #212529;
+  border-radius: 2px;
+}
+
+.unverified {
+  font: normal normal bold 16px/33px Lato;
+  letter-spacing: 0px;
+  color: #212529;
+}
+
+.candSendBtn {
+  width: 416px;
+  height: 51px;
+  font: normal normal bold 16px/33px Lato;
+  color: #198754;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
 }
 </style>
